@@ -95,21 +95,18 @@
   
   <script>
   
-  const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwTzLMiy8zlxpGU3b5kTBiN-gQjmR8sanSmZZvyalj0lj5WIGgwN52iuWYIJrSlsM5KRQ/exec'; // Replace with your deployed Google Apps Script URL
+let score = 0;
+let timeLeft = 15; // Timer set to 15 seconds
+let timerId;
+let topScores = JSON.parse(localStorage.getItem('topScores')) || []; // Load saved scores
 
-// Elements
 const restartButton = document.getElementById('restartButton');
 const timerDisplay = document.getElementById('timer');
 const scoreDisplay = document.getElementById('score');
 const scoreBar = document.getElementById('scoreBar');
 const scoreList = document.getElementById('scoreList');
-const resetLeaderboardButton = document.getElementById('resetLeaderboard');
 
-let score = 0;
-let timeLeft = 15; // Game duration in seconds
-let timerId;
-
-// Start the game
+// Start the click speed test
 function startGame() {
   score = 0;
   timeLeft = 15; // Reset timer
@@ -118,7 +115,7 @@ function startGame() {
   restartButton.style.display = 'none';
   scoreBar.style.width = '0%'; // Reset score bar
 
-  // Start the timer
+  // Decrement the timer every second
   timerId = setInterval(() => {
     timeLeft--;
     timerDisplay.textContent = `Time Left: ${timeLeft}s`;
@@ -128,20 +125,20 @@ function startGame() {
     }
   }, 1000);
 
-  // Enable click tracking
+  // Enable click
   document.body.addEventListener('click', incrementScore);
 }
 
-// Handle clicks to increment the score
+// Handle clicks
 function incrementScore() {
   score++;
   scoreDisplay.textContent = `Score: ${score}`;
   updateScoreBar();
 }
 
-// Update the score bar based on the current score
+// Update the score bar based on the score
 function updateScoreBar() {
-  const maxScore = 100; // Adjust based on expected max score
+  const maxScore = 100; // Adjust this value as needed
   const widthPercentage = Math.min((score / maxScore) * 100, 100); // Cap at 100%
   scoreBar.style.width = `${widthPercentage}%`;
 }
@@ -153,90 +150,43 @@ function endGame() {
   restartButton.style.display = 'block';
   timerDisplay.textContent = `Time's Up!`;
 
-  // Save the score
+  // Save the score and update the leaderboard
   saveScore(score);
+  updateLeaderboard();
 }
 
-// Save the player's score to the global leaderboard
-async function saveScore(score) {
+// Save the player's score and keep the top 10 scores
+function saveScore(score) {
   let playerName = prompt('Enter your name:');
-
+  
   // If the player cancels or leaves the name empty, don't save the score
   if (playerName === null || playerName.trim() === '') {
     alert("Score not saved.");
-    return;
+    return; // Exit without saving
   }
 
-  try {
-    await fetch(API_BASE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'save', name: playerName, score }),
-    });
-    alert("Score saved!");
-    updateLeaderboard();
-  } catch (error) {
-    console.error('Error saving score:', error);
-    alert("Failed to save score. Please try again.");
-  }
+  // Save the score if the name is valid
+  topScores.push({ name: playerName, score });
+  topScores.sort((a, b) => b.score - a.score); // Sort scores in descending order
+  topScores = topScores.slice(0, 10); // Keep only the top 10
+  localStorage.setItem('topScores', JSON.stringify(topScores)); // Save to localStorage
 }
 
-// Fetch and display the leaderboard
-async function updateLeaderboard() {
-  try {
-    const response = await fetch(API_BASE_URL);
-    const leaderboard = await response.json();
-
-    // Clear the existing leaderboard and populate with updated scores
-    scoreList.innerHTML = '';
-    leaderboard.forEach(({ name, score }, index) => {
-      const listItem = document.createElement('li');
-      listItem.textContent = `${index + 1}. ${name} - ${score}`;
-      scoreList.appendChild(listItem);
-    });
-  } catch (error) {
-    console.error('Error fetching leaderboard:', error);
-    alert("Failed to load leaderboard. Please try again.");
-  }
-}
-
-// Reset the leaderboard (admin-only)
-async function resetLeaderboard() {
-  const adminKey = prompt("Enter the admin password:");
-
-  if (!adminKey) {
-    alert("Password is required to reset the leaderboard.");
-    return;
-  }
-
-  try {
-    const response = await fetch(API_BASE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'reset', adminKey }),
-    });
-
-    const result = await response.text();
-
-    if (result === "Leaderboard reset") {
-      alert(result);
-      updateLeaderboard();
-    } else {
-      alert(result); // Show "Unauthorized" or other error messages
-    }
-  } catch (error) {
-    console.error('Error resetting leaderboard:', error);
-    alert("Failed to reset leaderboard. Please try again.");
-  }
+// Update the leaderboard display
+function updateLeaderboard() {
+  scoreList.innerHTML = '';
+  topScores.forEach(({ name, score }, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${name} - ${score}`;
+    scoreList.appendChild(listItem);
+  });
 }
 
 // Restart the game
 restartButton.addEventListener('click', startGame);
 
-// Admin-only reset leaderboard button
-resetLeaderboardButton.addEventListener('click', resetLeaderboard);
-
-// Initialize the leaderboard on page load
+// Initialize the game and load leaderboard
+startGame();
 updateLeaderboard();
 
 </script>
