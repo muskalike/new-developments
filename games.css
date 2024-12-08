@@ -1,0 +1,205 @@
+/* css for games page */
+
+body{
+
+background: black;
+
+
+}
+.container{
+    padding: 10px 10%;
+ }
+
+ /* start of button game css */
+
+.container div p{
+    margin: 100px auto;
+    padding: 20px;
+    max-width: 400px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+ }
+.container div button{
+    margin: 100px auto;
+    padding: 20px;
+    max-width: 400px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+#clickButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #clickButton:active {
+    background-color: #0056b3;
+  }
+  
+  #restartButton {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #restartButton:active {
+    background-color: #218838;
+  }
+  
+  #timer, #score {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+
+/* Score bar styling */
+
+
+/* Scoreboard container */
+#scoreboard {
+    margin-top: 20px;
+    text-align: left;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  #scoreboard h2 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+  }
+  
+  #scoreboard ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #scoreboard li {
+    font-size: 1em;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #scoreboard li:last-child {
+    border-bottom: none;
+  }
+  
+
+/* end of button game css */
+
+ nav{
+    position: sticky; 
+    top: 0px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+   
+ }
+
+ div ul{
+    margin-top: -80px;
+    margin-right: 100px;
+   
+ }
+
+ nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+    margin-top: 10px;
+    font-family: sans-serif;
+    transform: translateX(900px);
+ }
+
+ nav ul li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+
+   
+ }
+ nav ul li a::after{
+    content:"";
+    width: 0%;
+    height: 3px;
+    background: #ff004f;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.5s;
+ }
+
+ nav ul li a:hover::after{
+    width: 100%;
+
+ }
+
+ .header-text-game h1{
+    color: #fff;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 100px;
+ }
+
+ .header-text-description-game h1{
+    color: #d52b60;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 30px;
+ }
+
+ .header-text h1{
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 60px;
+    margin-top: 100px;
+ }
+
+.header-text{
+    margin-top: 0%;
+    font-size: 30px;
+ }
+
+ .header-text-student{
+    margin-top: 40%;
+    font-size: 20px;
+ }
+
+ .header-text h1{
+    font-size: 60px;
+    margin-top: 1px;
+ }
+
+ .header-text-student p{
+  font-size: 30px;
+  margin-top: -300px;
+  font-family: sans-serif;
+}
+
+ .header-text-student h2{
+  font-size: 70px;
+  margin-top: 20px;
+}
+
+.header-text h1 span {
+  color: #ff004f;
+}
+
+.header-text-student h2 span {
+   color: #ff004f;
+ }
