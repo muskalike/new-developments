@@ -168,50 +168,150 @@
 
 <script>
 
-  var tablinks = document.getElementsByClassName("tab-links");
-  var tabcontents = document.getElementsByClassName("tab-contents");
+ const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwTzLMiy8zlxpGU3b5kTBiN-gQjmR8sanSmZZvyalj0lj5WIGgwN52iuWYIJrSlsM5KRQ/exec'; // Replace with your deployed Google Apps Script URL
 
-  function opentab(tabname){
-    for(tablink of tablinks){
-      tablink.classList.remove("active-link");
+// Elements
+const restartButton = document.getElementById('restartButton');
+const timerDisplay = document.getElementById('timer');
+const scoreDisplay = document.getElementById('score');
+const scoreBar = document.getElementById('scoreBar');
+const scoreList = document.getElementById('scoreList');
+const resetLeaderboardButton = document.getElementById('resetLeaderboard');
+
+let score = 0;
+let timeLeft = 15; // Game duration in seconds
+let timerId;
+
+// Start the game
+function startGame() {
+  score = 0;
+  timeLeft = 15; // Reset timer
+  timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+  scoreDisplay.textContent = `Score: ${score}`;
+  restartButton.style.display = 'none';
+  scoreBar.style.width = '0%'; // Reset score bar
+
+  // Start the timer
+  timerId = setInterval(() => {
+    timeLeft--;
+    timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+
+    if (timeLeft <= 0) {
+      endGame();
     }
-    for(tabcontent of tabcontents){
-      tabcontent.classList.remove("active-tab");
+  }, 1000);
+
+  // Enable click tracking
+  document.body.addEventListener('click', incrementScore);
+}
+
+// Handle clicks to increment the score
+function incrementScore() {
+  score++;
+  scoreDisplay.textContent = `Score: ${score}`;
+  updateScoreBar();
+}
+
+// Update the score bar based on the current score
+function updateScoreBar() {
+  const maxScore = 100; // Adjust based on expected max score
+  const widthPercentage = Math.min((score / maxScore) * 100, 100); // Cap at 100%
+  scoreBar.style.width = `${widthPercentage}%`;
+}
+
+// End the game
+function endGame() {
+  clearInterval(timerId);
+  document.body.removeEventListener('click', incrementScore);
+  restartButton.style.display = 'block';
+  timerDisplay.textContent = `Time's Up!`;
+
+  // Save the score
+  saveScore(score);
+}
+
+// Save the player's score to the global leaderboard
+async function saveScore(score) {
+  let playerName = prompt('Enter your name:');
+
+  // If the player cancels or leaves the name empty, don't save the score
+  if (playerName === null || playerName.trim() === '') {
+    alert("Score not saved.");
+    return;
+  }
+
+  try {
+    await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save', name: playerName, score }),
+    });
+    alert("Score saved!");
+    updateLeaderboard();
+  } catch (error) {
+    console.error('Error saving score:', error);
+    alert("Failed to save score. Please try again.");
+  }
+}
+
+// Fetch and display the leaderboard
+async function updateLeaderboard() {
+  try {
+    const response = await fetch(API_BASE_URL);
+    const leaderboard = await response.json();
+
+    // Clear the existing leaderboard and populate with updated scores
+    scoreList.innerHTML = '';
+    leaderboard.forEach(({ name, score }, index) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${index + 1}. ${name} - ${score}`;
+      scoreList.appendChild(listItem);
+    });
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error);
+    alert("Failed to load leaderboard. Please try again.");
+  }
+}
+
+// Reset the leaderboard (admin-only)
+async function resetLeaderboard() {
+  const adminKey = prompt("Enter the admin password:");
+
+  if (!adminKey) {
+    alert("Password is required to reset the leaderboard.");
+    return;
+  }
+
+  try {
+    const response = await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'reset', adminKey }),
+    });
+
+    const result = await response.text();
+
+    if (result === "Leaderboard reset") {
+      alert(result);
+      updateLeaderboard();
+    } else {
+      alert(result); // Show "Unauthorized" or other error messages
     }
-    event.currentTarget.classList.add("active-link");
-    document.getElementById(tabname).classList.add("active-tab");
+  } catch (error) {
+    console.error('Error resetting leaderboard:', error);
+    alert("Failed to reset leaderboard. Please try again.");
   }
-</script>
+}
 
-<script>
+// Restart the game
+restartButton.addEventListener('click', startGame);
 
-    var sidemenu = document.getElementById("sidemenu");
+// Admin-only reset leaderboard button
+resetLeaderboardButton.addEventListener('click', resetLeaderboard);
 
-  function openmenu(){
-      sidemenu.style.right = "0";
-  }
-  function closemenu(){
-      sidemenu.style.right = "-200px";
-  }
+// Initialize the leaderboard on page load
+updateLeaderboard();
 
-</script>
-<script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwTzLMiy8zlxpGU3b5kTBiN-gQjmR8sanSmZZvyalj0lj5WIGgwN52iuWYIJrSlsM5KRQ/exec'
-  const form = document.forms['submit-to-google-sheet']
-  const msg = document.getElementById("msg")
-
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-        msg.innerHTML = "Message Sent Succesfully"
-        setTimeout(function(){
-          msg.innerHTML = ""
-        },2000)
-        form.reset()
-      })
-      .catch(error => console.error('Error!', error.message))
-  })
 </script>
 
 
