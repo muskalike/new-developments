@@ -19,8 +19,8 @@
              <ul id="sidemenu">
                 <li><a href="#home" style="color: inherit;">Home</a></li>
                 <li><a href="#about" style="color: inherit;">About</a></li>
-                <li><a href="#What I Do" style="color: inherit;">What I Do</a></li>
-                <li><a href="#portfolio" style="color: inherit;">Portfolio</a></li>
+                <li><a href="#My Interests" style="color: inherit;">My Interests</a></li>
+                <li><a href="#Portfolio" style="color: inherit;">Portfolio</a></li>
                 <li><a href="#contact" style="color: inherit;">Contact</a></li>
                 <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
              </ul>
@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-<!------------about--------->
+<!------------about me--------->
 <div id="about">
   <div class="container">
     <div class="row">
@@ -43,7 +43,7 @@
       </div>
       <div class="about-col-2">
         <h1 class="sub-title">About Me</h1>
-        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        <p>My name is Owen Hill and I am from Pittsburgh, Pennsylvannia. Im a runner, photographer and, engineer. I got into coding through the use of Arduino software. The more I used it the more I learned that I enjoy coding. I attempted building a website prior to this but it wasn't anything like this.</p>
 
         <div class="tab-titles">
           <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
@@ -52,16 +52,16 @@
         </div>
         <div class="tab-contents active-tab" id="skills">
           <ul>
-            <li><span>Coder</span><br>Description</li>
-            <li><span>Web Development</span><br>Description</li>
-            <li><span>Programmer</span><br>Description</li>
+            <li><span>Photographer</span><br>Description</li>
+            <li><span>Runner</span><br>North Hills High School</li>
+          
           </ul>
         </div>
         <div class="tab-contents" id="experience">
           <ul>
             <li><span>Summer 2024 </span><br>Biomedical Engineering Internship at University of Pittsburgh</li>
-            <li><span>Another experience </span><br>Description</li>
-            <li><span>Another experience </span><br>Description</li>
+            <li><span>Electrical Wiring</span><br>Experience with wiring circuits (3-way Switches, Outlets, etc...</li>
+           
           </ul>
         </div>
         <div class="tab-contents" id="education">
@@ -74,14 +74,14 @@
     </div>
   </div>
 </div>
-<!------------what I DO--------->
-<div id="What I Do">
+<!----------My Interests----------->
+<div id="My Interests">
   <div class="container">
-    <h1 class="sub-title">What I Do</h1>
+    <h1 class="sub-title">My Interests</h1>
     <div class="services-list">
       <div>
         <i class="fa-solid fa-person-running"></i>
-        <h2>Runner</h2>
+        <h2>Running</h2>
         <p>I run for North Hills High School distance team. </p>
         <a href="https://www.northhillstfxc.com/home" target="_blank" >North Hills Distance team</a>
       </div>
@@ -95,15 +95,15 @@
         <i class="fa-solid fa-cube"></i>
         <h2>3D Printing</h2>
         <p>I will be building my own parts and Custom objects with my Bambu Labs A1 mini.</p>
-        <a href="#">Learn more</a>
+        <a href="#">Coming soon...</a>
       </div>
     </div>
   </div>
 </div>
 <!------------portfolio--------->
-<div id="portfolio">
+<div id="Portfolio">
   <div class="container">
-    <h1 class="sub-title">My Work</h1>
+    <h1 class="sub-title">Portfolio</h1>
     <div class="work-list">
       <div class="work">
         <img src="images/IMG_3542.jpg">
@@ -114,11 +114,11 @@
         </div>
       </div>
       <div class="work">
-        <img src="images/image (1).jpg">
+        <img src="images/IMG_2207.png">
         <div class="layer">
-          <h3>Cross-Country Home Meet</h3>
-          <p>Final Results</p>
-          <a href="#" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <h3>My Photos</h3>
+          <p>Photo Album</p>
+          <a href="https://share.icloud.com/photos/06fGWTlD38eO0Nfx88FGwrH3A" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
       </div>
       <div class="work">
@@ -139,12 +139,12 @@
     <div class="row">
       <div class="contact-left">
         <h1 class="sub-title">Contact Me</h1>
-        <p><i class="fa-solid fa-paper-plane"></i>contact@example.com</p>
+        <p><i class="fa-solid fa-paper-plane"></i>owenchill@gmail.com</p>
         <p><i class="fa-solid fa-square-phone"></i>0123456789</p>
         <div class="social-icons">
           <a href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
           <a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a>
-          <a href="https://linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://www.linkedin.com/feed/?trk=404_page" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <a href="images/Download.jpg" target="_blank" download class="btn btn2">Download CV</a>
       </div>
@@ -206,12 +206,13 @@
         msg.innerHTML = "Message Sent Succesfully"
         setTimeout(function(){
           msg.innerHTML = ""
-        },5000)
+        },2000)
         form.reset()
       })
       .catch(error => console.error('Error!', error.message))
   })
 </script>
+
 
 </body>
 </html>
