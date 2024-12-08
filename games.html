@@ -95,7 +95,7 @@
   
   <script>
   
-let score = 0;
+let score = 0; 
 let timeLeft = 15; // Timer set to 15 seconds
 let timerId;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || []; // Load saved scores
@@ -166,7 +166,7 @@ function saveScore(score) {
   }
 
   // Save the score if the name is valid
-  topScores.push({ name: playerName, score });
+  topScores.push({ name: playerName.trim(), score });
   topScores.sort((a, b) => b.score - a.score); // Sort scores in descending order
   topScores = topScores.slice(0, 10); // Keep only the top 10
   localStorage.setItem('topScores', JSON.stringify(topScores)); // Save to localStorage
@@ -174,12 +174,23 @@ function saveScore(score) {
 
 // Update the leaderboard display
 function updateLeaderboard() {
-  scoreList.innerHTML = '';
-  topScores.forEach(({ name, score }, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${index + 1}. ${name} - ${score}`;
-    scoreList.appendChild(listItem);
-  });
+  try {
+    scoreList.innerHTML = ''; // Clear the leaderboard display
+
+    if (!topScores || topScores.length === 0) {
+      scoreList.innerHTML = '<li>No scores yet. Be the first!</li>'; // Handle empty leaderboard
+      return;
+    }
+
+    topScores.forEach(({ name, score }, index) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${index + 1}. ${name} - ${score}`;
+      scoreList.appendChild(listItem);
+    });
+  } catch (error) {
+    console.error('Error updating leaderboard:', error);
+    alert('There was an error displaying the leaderboard. Please try again.');
+  }
 }
 
 // Restart the game
@@ -188,6 +199,7 @@ restartButton.addEventListener('click', startGame);
 // Initialize the game and load leaderboard
 startGame();
 updateLeaderboard();
+
 
 </script>
 
