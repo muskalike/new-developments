@@ -45,7 +45,7 @@ body {
  }
 
  nav ul li a{
-    color: fff;
+    color: #fff;
     text-decoration: none;
     font-size: 18px;
     position: relative;
@@ -126,10 +126,15 @@ body {
  .about-col-1 img{
    width: 100%;
    border-radius: 15px;
+   margin-top: 100px;
  }
 
  .about-col-2{
    flex-basis: 60%;
+ }
+
+ .about-col-2 p{
+  margin-top: 30px;
  }
 
  .sub-title{
@@ -186,11 +191,20 @@ body {
 
  }
 
- -------------------What I Do--------------
+ -------------------My Interests--------------
 
  #services{
   padding: 30px 0;
  }
+
+ .sub-title{
+  margin-top: 100px;
+ }
+
+ .services-list div i h2 p a{
+  margin-top: 50px;
+ }
+
  .services-list{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -231,10 +245,14 @@ body {
   transform: translateY(-10px);
  }
 
- -------------------My Work--------------
+ -------------------Portfolio--------------
 
  #portfolio{
   padding: 50px 0;
+ }
+
+ .sub-title{
+  margin-top: 100px;
  }
 
  .work-list{
@@ -255,6 +273,7 @@ body {
   border-radius: 10px;
   display: block;
   transition: transform 0.5s;
+  margin-top: 20px;
  }
 
  .layer{
@@ -366,7 +385,7 @@ body {
   width: 100%;
 }
 
-.form input, form textarea {
+form input, form textarea{
   width: 100%;
   border: 0;
   outline: none;
@@ -473,9 +492,5 @@ nav .fa-solid{
   color: #61b752;
   margin-top: -40px;
   display: block;
-}splay: block;
 }
-
-
-
 
