@@ -20,11 +20,11 @@
                 <div>
                   <div class="position-sticky">
                 <ul class="navbar">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="index.html">About</a></li>
-                    <li><a href="index.html">My Interests</a></li>
-                    <li><a href="index.html">Portfolio</a></li>
-                    <li><a href="index.html">Contact</a></li>
+                    <li><a href="index.html1.0gamesintegration.html" class="active">Home</a></li>
+                    <li><a href="index.html1.0gamesintegration.html">About</a></li>
+                    <li><a href="index.html1.0gamesintegration.html">My Interests</a></li>
+                    <li><a href="index.html1.0gamesintegration.html">Portfolio</a></li>
+                    <li><a href="index.html1.0gamesintegration.html">Contact</a></li>
                     <li><a href="#games">Games</a></li>
                 </ul>
                     </div>
@@ -36,25 +36,34 @@
             <div class="header-text-description-game">
                 <h1>In this game you goal is to click the mouse as many times as you can in 15 seconds.<br>After the game is over your score will be recorded and tallied onto the leaderboard. </h1>
             </div>
-            <div>
-                <p id="timer">Time Left: 15s</p>
-                <button id="clickButton">Click Me!</button>
-                <p id="score">Score: 0</p>
-                <button id="restartButton" style="display: none;">Restart</button>
-               <button id="resetButton">Reset Leaderboard</button>
-
-                    <div class="score-bar-container">
+        <div>
+            <div class="time-left">
+                <div class="time-left-timer">
+                    <p id="timer">Time Left: 15s</p>
+                </div>
+                <div class="time-button">
+                    <button id="clickButton">Click Me!</button>
+                 </div>
+                <div class="time-score">
+                    <p id="score">Score: 0</p>
+                 </div>  
+                <div class="time-restart">
+                    <button id="restartButton" style="display: none;">Restart</button>
+                    <button id="resetButton">Reset Leaderboard</button>
+                </div>
+                <div class="score-bar-container">
                         <div id="scoreBar" class="score-bar"></div>
                     </div>
                     <div id="scoreboard">
                         <h2>Top 10 Scores</h2>
                         <ul id="scoreList"></ul>
                       </div>
+                 </div>
             </div>
         </div>
     </div>
   
-  <p></p>
+
 
   <script>
     // Fetch navbar.html and insert it into the div with id "navbar"
@@ -63,7 +72,7 @@
       .then(data => document.getElementById('navbar').innerHTML = data);
   </script>
 
- <h2>Click Speed Test</h2>
+ 
 
 
 
@@ -209,6 +218,9 @@ updateLeaderboard();
 </script>
 
 
+
+</body>
+</html>
 
 </body>
 </html>
