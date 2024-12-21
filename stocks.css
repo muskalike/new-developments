@@ -1,0 +1,122 @@
+/* General Body Styles */
+body {
+    background-color: #121212;
+    color: #ffffff; /* Pure white text */
+    font-family: Arial, sans-serif;
+    font-weight: bold; /* Makes all body text bold */
+    padding: 20px;
+    text-align: center;
+  }
+
+
+
+    .header-text h1 span {
+    color: #ff004f;
+  }
+
+
+    .header-text h1{
+    margin-left: -1350px;
+    margin-top: 1px;
+    font-size: 60px;
+    color: #ffffff;
+ }
+
+
+  .position-sticky{
+    position:-webkit-sticky;/* needed for ios*/
+    position:sticky;
+    top:0;
+    }
+
+ nav{
+    position: sticky; 
+    top: 0px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+   
+ }
+
+ div ul{
+    margin-top: -80px;
+    margin-right: 100px;
+   
+ }
+
+ nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+    margin-top: 10px;
+    font-family: sans-serif;
+    transform: translateX(900px);
+ }
+
+ nav ul li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+
+   
+ }
+ nav ul li a::after{
+    content:"";
+    width: 0%;
+    height: 3px;
+    background: #ff004f;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.5s;
+ }
+
+ nav ul li a:hover::after{
+    width: 100%;
+
+ }
+
+
+  /* Input Field Styling */
+  #ticker {
+    background-color: #333333;
+    color: #ffffff; /* Pure white text */
+    border: 1px solid #555555;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold; /* Bold text in the input field */
+  }
+  
+  /* Button Styling */
+  #timeRangeButtons button {
+    margin-bottom: 500px;
+    margin: 15px;
+    background-color: #333333;
+    color: #ffffff; /* Pure white text */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold; /* Bold text on buttons */
+  }
+  
+  #timeRangeButtons button:hover {
+    background-color: #555555;
+  }
+  
+  /* Chart Canvas */
+  #stockChart {
+    margin-top: 100px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  /* Header Styling */
+  h1 {
+    color: #ffffff; /* Pure white text */
+    font-weight: bolder; /* Extra-bold text for header */
+  }
+  
