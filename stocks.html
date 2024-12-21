@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock Analyzer</title>
+  <link rel="stylesheet" href="stocks.css">
+ 
+  
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+
+    <div id="header">
+        <div class="container">
+    
+             <div class="header-text">
+               <h1><span>O</span>wen.<br></h1>
+           </div>  
+                 <nav>
+                    <div>
+                      <div class="position-sticky">
+                    <ul class="navbar">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="index.html">About</a></li>
+                        <li><a href="index.html">My Interests</a></li>
+                        <li><a href="index.html">Portfolio</a></li>
+                        <li><a href="index.html">Contact</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="stocks.html">Stock Analyzer</a></li>
+                    </ul>
+                        </div>
+                    </div>
+                </nav>
+                
+                     </div>
+                </div>
+         
+
+                <div id="timeRangeButtons">
+                    <button onclick="updateTimeRange('1d')">1 Day</button>
+                    <button onclick="updateTimeRange('5d')">5 Days</button>
+                    <button onclick="updateTimeRange('1mo')">1 Month</button>
+                    <button onclick="updateTimeRange('3mo')">3 Months</button>
+                    <button onclick="updateTimeRange('6mo')">6 Months</button>
+                    <button onclick="updateTimeRange('1y')">1 Year</button>
+                    <button onclick="updateTimeRange('3y')">3 Years</button>
+                    <button onclick="updateTimeRange('5y')">5 Years</button>
+                    <button onclick="updateTimeRange('ytd')">YTD</button>
+                    <button onclick="updateTimeRange('max')">All Time</button>
+                  </div>
+                  
+
+
+
+
+
+  <input type="text" id="ticker" placeholder="Enter Stock Ticker">
+  <button onclick="fetchStockData()">Get Stock Data</button>
+  <canvas id="stockChart"></canvas>
+
+  <script src="app.js"></script>
+
+  <script>
+
+<!-- Include Chart.js -->
+
+
+let currentTicker = '';
+let currentTimeRange = '1mo'; // Default to 1 Month
+
+async function fetchStockData() {
+  const ticker = document.getElementById('ticker').value.toUpperCase();
+  const url = `https://twelve-data1.p.rapidapi.com/time_series?symbol=${ticker}&interval=1day&outputsize=30&format=json`;
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'a95c34bef7mshe39d0a01415905ap13f2bbjsn55205f82bad8',
+      'X-RapidAPI-Host': 'twelve-data1.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.values) {
+      const labels = data.values.map(entry => entry.datetime).reverse();
+      const prices = data.values.map(entry => parseFloat(entry.close)).reverse();
+      renderChart(labels, prices, ticker);
+    } else {
+      alert('Invalid ticker symbol or no data available.');
+    }
+  } catch (error) {
+    console.error('Error fetching stock data:', error);
+  }
+}
+
+
+
+
+
+function filterDataByRange(data, range) {
+  const now = new Date();
+  const timeLimits = {
+    '1d': 1,
+    '5d': 5,
+    '1mo': 30,
+    '3mo': 90,
+    '6mo': 180,
+    '1y': 365,
+    '3y': 365 * 3,
+    '5y': 365 * 5,
+    'ytd': now.getFullYear(),
+    'max': Infinity
+  };
+
+  if (range === 'ytd') {
+    return data.filter(entry => new Date(entry.datetime).getFullYear() === timeLimits['ytd']);
+  }
+
+  const days = timeLimits[range];
+  const cutoff = new Date();
+  cutoff.setDate(now.getDate() - days);
+  return data.filter(entry => new Date(entry.datetime) >= cutoff);
+}
+
+
+
+/Render the Chart/
+
+function renderChart(labels, data, ticker) {
+  const ctx = document.getElementById('stockChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: `${ticker} Stock Price`,
+          data: data,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date',
+          },
+          ticks: {
+            color: '#ffffff',
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Price (USD)',
+          },
+          ticks: {
+            color: '#ffffff',
+          },
+        },
+      },
+    },
+  });
+}
+
+
+
+
+
+
+  </script>
+</body>
+</html>
